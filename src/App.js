@@ -2,19 +2,29 @@ import React, { useState } from 'react';
 import './App.css';
 import Card from './Card';
 import SearchBox from './SearchBox';
-import {roborts} from './RobotsArray';
+import {robots} from './RobotsArray';
 
 
 function App() {
 
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState('abc');
+
   const searchOnChange =(e) =>{
-    console.log(e.target.value);
+    setSearch(e.target.value);
+    
   }
+  const filterSearch = robots.filter((robot) =>{
+    
+    return robot.first_name.toLowerCase().includes(search.toLowerCase());
+
+    // This partialy works>>
+    //return robot.first_name.includes(search);    
+  })
+
   return (
     <div className="App">
        <SearchBox searchRobo={searchOnChange}/>
-      <Card roboName = {roborts}/>
+      <Card roboName = {filterSearch}/>
     </div>
   );
 }
