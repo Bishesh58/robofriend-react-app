@@ -3,6 +3,9 @@ import {roborts} from "./RobotsArray";
 import tachyons from 'tachyons'
 
 function Card() {
+
+   
+    
     return (
         <div className="ml4">
             {roborts.map((robort)=>{
