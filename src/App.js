@@ -3,6 +3,7 @@ import './App.css';
 import Card from './Card';
 import SearchBox from './SearchBox';
 import {robots} from './RobotsArray';
+import Scroll from './Scroll';
 
 
 function App() {
@@ -24,7 +25,10 @@ function App() {
   return (
     <div className="App">
        <SearchBox searchRobo={searchOnChange}/>
-      <Card roboName = {filterSearch}/>
+       <Scroll>
+       <Card roboName = {filterSearch}/>
+       </Scroll>
+      
     </div>
   );
 }
