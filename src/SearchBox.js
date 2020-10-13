@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 function SearchBox({searchRobo}) {
 
     return (
-        <div className="tc w-50 ml-auto mr-auto mb3 p2 shadow-5 br4 randomColor">
-            <h1 className="pt3">Robo Friends</h1>
+        <div className=" center tc w-50 ml-auto mr-auto mb3">
+            <h2>Robo Friends</h2>
             <input type="search"
              onChange={searchRobo} 
              placeholder="search robots"
-             className="t3 tc p2 br3 h2 mb3">
+             className="t3 tc p2 br3 h2">
              </input>
         </div>
     )
