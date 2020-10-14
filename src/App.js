@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Card from './Card';
 import SearchBox from './SearchBox';
-import {robots} from './RobotsArray';
 import Scroll from './Scroll';
 
 
 function App() {
 
-  const [search, setSearch] = useState('abc');
+  const [robots, setRobots] = useState([])
+  const [search, setSearch] = useState('');
+
+  useEffect(()=>{
+    fetch('https://api.mockaroo.com/api/4705b0c0?count=200&key=c1210f40')
+    .then(response => response.json())
+    .then( data => {setRobots(data)})
+    .catch((e)=> console.log("Error>>", e))
+  },[])
 
   const searchOnChange =(e) =>{
     setSearch(e.target.value);
-    
   }
+
   const filterSearch = robots.filter((robot) =>{
     
-    return robot.first_name.toLowerCase().includes(search.toLowerCase());
-
-    // This partialy works>>
-    //return robot.first_name.includes(search);    
+    return robot.name.toLowerCase().includes(search.toLowerCase());
   })
 
-  return (
+  return !robots.length? <h1>Loading...</h1> : (
     <div className="App">
        <SearchBox searchRobo={searchOnChange}/>
        <Scroll>
@@ -30,7 +34,7 @@ function App() {
        </Scroll>
       
     </div>
-  );
+  )
 }
 
 export default App;
