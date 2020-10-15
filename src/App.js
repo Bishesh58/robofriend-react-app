@@ -1,32 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 import './App.css';
 import Card from './Card';
 import SearchBox from './SearchBox';
 import Scroll from './Scroll';
 
+import {setSearchField, requestRobots } from './actions';
+
+const mapStateToProps = state =>{
+  return{
+    searchField: state.searchRobots.searchField,
+    robots: state.requestRobots.isPending,
+    error: state.requestRobots.error
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+ return { 
+   searchOnChange: (e) => dispatch(setSearchField(e.target.value)),
+   onRequestRobots: () => dispatch(requestRobots())
+ }
+}
 
 function App() {
 
-  const [robots, setRobots] = useState([])
-  const [search, setSearch] = useState('');
-
-  useEffect(()=>{
-    fetch('https://api.mockaroo.com/api/4705b0c0?count=200&key=c1210f40')
-    .then(response => response.json())
-    .then( data => {setRobots(data)})
-    .catch((e)=> console.log("Error>>", e))
-  },[])
-
-  const searchOnChange =(e) =>{
-    setSearch(e.target.value);
-  }
-
+  
+  const {searchField, searchOnChange, robots, isPending} = this.props
+ 
+  
   const filterSearch = robots.filter((robot) =>{
     
-    return robot.name.toLowerCase().includes(search.toLowerCase());
+    return robot.name.toLowerCase().includes(searchField.toLowerCase());
   })
 
-  return !robots.length? <h1>Loading...</h1> : (
+  return isPending? <h1>Loading...</h1> : (
     <div className="App">
        <SearchBox searchRobo={searchOnChange}/>
        <Scroll>
@@ -37,4 +44,4 @@ function App() {
   )
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
